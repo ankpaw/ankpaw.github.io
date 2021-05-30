@@ -8,7 +8,12 @@ const Navbar = (): JSX.Element => {
         className="flex items-center flex-shrink-0 text-black mr-6 cursor-pointer"
         onClick={() => router.push("/")}
       >
-        <Image src="/favicon-32x32.png" height="32" width="32" />
+        <Image
+          alt="Ankit Pawar Logo"
+          src="/favicon-32x32.png"
+          height="32"
+          width="32"
+        />
         <span className="ml-4 font-semibold text-xl tracking-tight">
           Ankit Pawar
         </span>

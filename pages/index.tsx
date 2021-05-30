@@ -18,7 +18,7 @@ const Home = () => {
   return (
     <div>
       <Lottie options={defaultOptions} height={400} width={400} />
-      <h1 className="text-center text-4xl text-blue-400">Work in Progress!</h1>
+      <h1 className="text-center text-4xl text-blue-900">Work in Progress!</h1>
     </div>
   );
 };
