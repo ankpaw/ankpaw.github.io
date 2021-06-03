@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import router from "next/router";
 const Navbar = (): JSX.Element => {
+  const [navbarClass, setNavbarClass] = useState("hidden");
+
   return (
     <nav className="flex items-center justify-between flex-wrap bg-white p-6">
       <div
@@ -19,7 +21,12 @@ const Navbar = (): JSX.Element => {
         </span>
       </div>
       <div className="block lg:hidden">
-        <button className="flex items-center px-3 py-2 border rounded border-black hover:border-black">
+        <button
+          onClick={() =>
+            setNavbarClass(navbarClass === "block" ? "hidden" : "block")
+          }
+          className="flex items-center px-3 py-2 border rounded border-black hover:border-black"
+        >
           <svg
             className="fill-current h-3 w-3"
             viewBox="0 0 20 20"
@@ -30,7 +37,9 @@ const Navbar = (): JSX.Element => {
           </svg>
         </button>
       </div>
-      <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+      <div
+        className={`w-full ${navbarClass} flex-grow lg:flex lg:items-center lg:w-auto`}
+      >
         <div className="text-sm lg:flex-grow">
           <a
             href="#responsive-header"
