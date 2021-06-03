@@ -3,7 +3,7 @@ import Image from "next/image";
 import router from "next/router";
 import Link from "next/link";
 const Navbar = (): JSX.Element => {
-  const [navbarClass, setNavbarClass] = useState("hidden");
+  const [navbarExpanded, setNavbarExpanded] = useState(false);
 
   return (
     <nav className="flex items-center justify-between flex-wrap bg-white p-6">
@@ -23,9 +23,7 @@ const Navbar = (): JSX.Element => {
       </div>
       <div className="block lg:hidden">
         <button
-          onClick={() =>
-            setNavbarClass(navbarClass === "block" ? "hidden" : "block")
-          }
+          onClick={() => setNavbarExpanded(navbarExpanded ? false : true)}
           className="flex items-center px-3 py-2 border rounded border-black hover:border-black"
         >
           <svg
@@ -39,7 +37,9 @@ const Navbar = (): JSX.Element => {
         </button>
       </div>
       <div
-        className={`w-full ${navbarClass} flex-grow lg:flex lg:items-center lg:w-auto`}
+        className={`${
+          navbarExpanded ? "block" : "hidden"
+        } w-full flex-grow lg:flex lg:items-center lg:w-auto`}
       >
         <div className="text-sm lg:flex-grow">
           <Link href="/about">
