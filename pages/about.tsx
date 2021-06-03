@@ -1,13 +1,13 @@
 import React from "react";
 import WorkInProgress from "../components/WIP/WorkInProgress";
-/* This is the homepage
- * @return {JSX.Element}: The JSX code for homepage.
+/* This is the about page
+ * @return {JSX.Element}: The JSX code for about page.
  */
-const Home = () => {
+const About = () => {
   return (
     <div>
       <WorkInProgress />
     </div>
   );
 };
-export default Home;
+export default About;

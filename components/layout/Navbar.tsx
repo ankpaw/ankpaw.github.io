@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import router from "next/router";
+import Link from "next/link";
 const Navbar = (): JSX.Element => {
   const [navbarClass, setNavbarClass] = useState("hidden");
 
@@ -41,30 +42,26 @@ const Navbar = (): JSX.Element => {
         className={`w-full ${navbarClass} flex-grow lg:flex lg:items-center lg:w-auto`}
       >
         <div className="text-sm lg:flex-grow">
-          <a
-            href="#responsive-header"
-            className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-blue-400 mr-4"
-          >
-            About
-          </a>
-          <a
-            href="#responsive-header"
-            className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-blue-400 mr-4"
-          >
-            Experience
-          </a>
-          <a
-            href="#responsive-header"
-            className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-blue-400 mr-4"
-          >
-            Blog
-          </a>
-          <a
-            href="#responsive-header"
-            className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-blue-400"
-          >
-            Contact
-          </a>
+          <Link href="/about">
+            <a className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-blue-400 mr-4">
+              About
+            </a>
+          </Link>
+          <Link href="/experience">
+            <a className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-blue-400 mr-4">
+              Experience
+            </a>
+          </Link>
+          <Link href="/blog">
+            <a className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-blue-400 mr-4">
+              Blog
+            </a>
+          </Link>
+          <Link href="/contact">
+            <a className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-blue-400">
+              Contact
+            </a>
+          </Link>
         </div>
         <div>
           <a
