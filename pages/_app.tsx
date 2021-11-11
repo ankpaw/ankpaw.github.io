@@ -1,8 +1,8 @@
 import React from "react";
 import Head from "next/head";
-import { AppProps } from "next/dist/next-server/lib/router/router";
 import { Navbar, Footer } from "../components/layout";
 import "tailwindcss/tailwind.css";
+import { AppProps } from "next/dist/shared/lib/router/router";
 const App = ({ Component, pageProps }: AppProps) => {
   return (
     <>
