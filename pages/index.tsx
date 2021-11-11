@@ -22,7 +22,7 @@ const Home = () => {
       </p>
 
       <button className="bg-black text-white border-black p-2 mt-8 border rounded hover:bg-gray-500">
-        Get In Touch
+        <a href="mailto:iamankitpawar@gmail.com">Get In Touch</a>
       </button>
     </div>
   );
