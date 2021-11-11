@@ -4,6 +4,9 @@ module.exports = {
   darkMode: "class", // or 'media' or 'class'
   theme: {
     extend: {},
+    listStyleType: {
+      square: "square",
+    },
   },
   variants: {
     extend: {},
