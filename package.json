@@ -2,6 +2,7 @@
   "name": "ankpaw.github.io",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build --debug",
@@ -14,9 +15,9 @@
     "test-all": "npm run check-format && npm run check-lint && npm run check-types && npm run build"
   },
   "dependencies": {
-    "next": "12.0.1",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "next": "^13.4.12",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-lottie": "1.2.3"
   },
   "devDependencies": {
@@ -28,13 +29,13 @@
     "autoprefixer": "10.2.6",
     "eslint": "7.27.0",
     "eslint-config-google": "0.14.0",
-    "eslint-config-next": "11.0.0",
+    "eslint-config-next": "^13.4.12",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-react": "7.24.0",
     "husky": "6.0.0",
     "postcss": "8.3.0",
     "prettier": "2.3.0",
     "tailwindcss": "2.1.2",
-    "typescript": "4.3.2"
+    "typescript": "^5.1.6"
   }
 }

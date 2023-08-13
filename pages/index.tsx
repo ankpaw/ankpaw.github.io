@@ -15,10 +15,14 @@ const Home = () => {
         reusable and optimised code . Web development is my forte. I have
         experience in both Open Source and Microsoft stack for development of
         scalable, responsive web applications. Currently helping build{" "}
-        <a href="https://meddo.in" className="text-blue-400">
-          meddo
-        </a>{" "}
-        to re-define how primary and secondary healthcare is provided in India.
+        <a
+          href="https://hub.com"
+          target="_blank"
+          className="text-blue-400"
+          rel="noreferrer"
+        >
+          Hub - reinventing the financial services operating model.
+        </a>
       </p>
 
       <button className="bg-black text-white border-black p-2 mt-8 border rounded hover:bg-gray-500">

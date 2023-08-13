@@ -42,25 +42,29 @@ const Navbar = (): JSX.Element => {
         } w-full flex-grow lg:flex lg:items-center lg:w-auto`}
       >
         <div className="text-sm lg:flex-grow">
-          <Link href="/about">
-            <a className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-blue-400 mr-4">
-              About
-            </a>
+          <Link
+            className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-blue-400 mr-4"
+            href="/about"
+          >
+            About
           </Link>
-          <Link href="/experience">
-            <a className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-blue-400 mr-4">
-              Experience
-            </a>
+          <Link
+            className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-blue-400 mr-4"
+            href="/experience"
+          >
+            Experience
           </Link>
-          <Link href="/blog">
-            <a className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-blue-400 mr-4">
-              Blog
-            </a>
+          <Link
+            className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-blue-400 mr-4"
+            href="/blog"
+          >
+            Blog
           </Link>
-          <Link href="/contact">
-            <a className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-blue-400">
-              Contact
-            </a>
+          <Link
+            className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-blue-400"
+            href="/contact"
+          >
+            Contact
           </Link>
         </div>
         <div>
