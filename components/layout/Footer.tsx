@@ -5,16 +5,28 @@ const Footer = (): JSX.Element => {
       <div className="container mx-auto px-6">
         <div className="mt-16 border-t-2 border-gray-300 flex flex-col items-center">
           <div className="sm:w-2/3 justify-center py-6 flex">
-            <a className="m-1" href="https://github.com/ankpaw">
+            <a
+              target="_blank"
+              className="m-1"
+              href="https://github.com/ankpaw"
+              rel="noreferrer"
+            >
               <img alt="github logo" src="/icons/github.png"></img>
             </a>
             <a
+              target="_blank"
               className="m-1"
               href="https://www.linkedin.com/in/iamankitpawar/"
+              rel="noreferrer"
             >
               <img alt="linkedin logo" src="/icons/linkedin-logo.png"></img>
             </a>
-            <a className="m-1" href="https://twitter.com/ap9064">
+            <a
+              target="_blank"
+              className="m-1"
+              href="https://twitter.com/ap9064"
+              rel="noreferrer"
+            >
               <img alt="twitter logo" src="/icons/twitter-sign.png"></img>
             </a>
           </div>

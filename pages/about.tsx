@@ -4,57 +4,79 @@ import React from "react";
  */
 const About = () => {
   return (
-    <div className="container mx-auto px-16">
-      <h1 className="text-5xl">About Me</h1>
-      <div className="xl:flex">
-        <div>
-          <div className="text-gray-500 mt-4">
-            <p className="max-w-2xl text-gray-500 mt-4">
-              Hello! My name is Ankit. I have always had a knack for problem
-              solving, and been fascinated by computers since I saw them for the
-              first time. Software development combines the two for me and that
-              is why I love it so much. I enjoy the work I do, and love to solve
-              complex problems and build stuff from grounds up. I started my
-              journey in 2017, when I got to know about competitive programming
-              and got chosen to be a campus ambassador by{" "}
-              <a className="text-blue-400" href="https://www.hackerearth.com/">
-                HackerEarth
-              </a>
-              . Since then, I have only grown and become better by every
-              experience/oppurtunity I got. I have got the oppurtunity to work
-              in variety of different environments like for small startups as
-              well as Fortune 500 companies, with/without technology stack
-              restrictions, huge/small development teams. My main focus these
-              days is to learn more new stuff and use it to add value to the
-              world we live in.
-            </p>
-            <p className="mt-8">
-              Here are a few technologies I have worked with:
-            </p>
-            <div className="mt-4 flex">
-              <ul className="text-black list-square px-16">
-                <li>ReactJS</li>
-                <li>NextJS</li>
-                <li>AngularJS</li>
-                <li>Angular2+</li>
-                <li>ASP .NET C#</li>
-              </ul>
-              <ul className="text-black list-square">
-                <li>JQuery</li>
-                <li>Javascript (ES6)</li>
-                <li>Node.JS</li>
-                <li>Svelte</li>
-                <li>Microsoft Azure</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <img
-          alt="profile"
-          className="mt-4"
-          src="https://avatars.githubusercontent.com/u/28015876?v=4"
-        />
-      </div>
+    <div className="container mx-auto p-8">
+      <h1 className="text-4xl font-bold mb-4">Ankit&apos;s Software Journey</h1>
+
+      <p>
+        Hello! My name is Ankit. Since my first encounter with computers,
+        I&apos;ve been captivated by their potential. The intersection of this
+        fascination and my knack for problem-solving led me to the world of
+        software development, a space I&apos;m deeply passionate about.
+      </p>
+
+      <h2 className="text-2xl font-semibold mt-6">Early Steps</h2>
+      <p>
+        My journey began in 2017 when I discovered competitive programming. This
+        arena honed my analytical thinking and kindled my love for algorithmic
+        challenges. During this time, I had the privilege of becoming a campus
+        ambassador for HackerEarth, which further solidified my connection to
+        the tech community.
+      </p>
+
+      <h2 className="text-2xl font-semibold mt-6">Diverse Experience</h2>
+      <p>
+        My journey has been diverse and enriching. From startups to Fortune 500
+        companies, I&apos;ve embraced the spectrum of software development
+        experiences. I&apos;ve worked with large and small development teams,
+        navigated projects with and without constraints, and learned from both
+        small startups and corporate giants.
+      </p>
+
+      <h2 className="text-2xl font-semibold mt-6">Crafting Solutions</h2>
+      <p>
+        As a UI Engineer at HUB, I&apos;ve played a vital role in building an
+        asset management platform, making individual contributions that matter.
+        During my tenure at Syfe, I contributed as a Mid-level UI Engineer,
+        actively shaping an investment management platform.
+      </p>
+
+      <h2 className="text-2xl font-semibold mt-6">Leading and Building</h2>
+      <p>
+        At Meddo Health, I led the frontend development effort as a Team Lead.
+        This role allowed me to guide the development of an e-commerce platform
+        catering to India&apos;s healthcare market.
+      </p>
+
+      <h2 className="text-2xl font-semibold mt-6">Fortifying Skills</h2>
+      <p>
+        As a Full Stack Software Engineer at MAQ Software, I honed my skills by
+        developing web applications for Fortune 500 clients in data analytics
+        and services.
+      </p>
+
+      <h2 className="text-2xl font-semibold mt-6">
+        Advocating Competitiveness
+      </h2>
+      <p>
+        My involvement as a Campus Ambassador at HackerEarth laid the foundation
+        for my advocacy of competitive coding. I organized hackathons, fostering
+        a competitive coding environment on my university campus.
+      </p>
+
+      <h2 className="text-2xl font-semibold mt-6">The Continuing Journey</h2>
+      <p>
+        Presently, I&apos;m dedicated to continuous learning. I aim to expand my
+        skill set and utilize new knowledge to contribute positively to our
+        world.
+      </p>
+
+      <p className="mt-6">
+        My journey in software development has been dynamic, rewarding, and
+        filled with learning experiences. With each opportunity, I&apos;ve grown
+        both as a developer and as an individual. I&apos;m excited for the
+        future as I continue to explore, innovate, and contribute to the
+        ever-evolving technology landscape.
+      </p>
     </div>
   );
 };
