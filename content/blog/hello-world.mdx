@@ -1,0 +1,65 @@
+---
+title: "Building a Modern Developer Portfolio with Next.js 15 and React 19"
+date: "2026-04-04"
+excerpt: "A walkthrough of how I rebuilt my personal website using the latest web technologies — Next.js 15 App Router, React 19, Tailwind CSS v4, MDX for blogging, and NextAuth.js for authentication."
+tags: ["Next.js", "React", "TypeScript", "MDX"]
+published: true
+---
+
+## Why I Rebuilt My Portfolio
+
+Every developer's portfolio is a living project. As new tools and frameworks mature, rebuilding from scratch is both a learning exercise and a chance to showcase up-to-date skills.
+
+This time around, I migrated from **Next.js 13 (Pages Router)** to **Next.js 15 (App Router)** with **React 19**, and added features I'd been wanting for a long time — a proper blog and role-based access control.
+
+## The Tech Stack
+
+Here's what powers this site:
+
+- **Next.js 15** with the App Router for file-system based routing and React Server Components
+- **React 19** with the latest concurrent features
+- **Tailwind CSS v4** with CSS-first configuration
+- **MDX** via `next-mdx-remote` for writing blog posts in Markdown + JSX
+- **NextAuth.js v5** (Auth.js) for GitHub OAuth authentication
+- **Shiki** for beautiful syntax highlighting
+
+## Setting Up MDX
+
+The blog system is powered by MDX files stored in a `content/blog/` directory. Each file has frontmatter for metadata:
+
+```yaml
+---
+title: "My Blog Post"
+date: "2026-04-04"
+excerpt: "A short description"
+tags: ["tag1", "tag2"]
+published: true
+---
+```
+
+A utility file reads these files, parses the frontmatter with `gray-matter`, and computes reading time. It's simple, git-based, and needs no database.
+
+## Code Highlighting
+
+Code blocks are rendered with syntax highlighting. Here's an example:
+
+```typescript
+export function getAllPosts(): BlogPost[] {
+  const slugs = getPostSlugs();
+  return slugs
+    .map((slug) => getPostBySlug(slug))
+    .filter((post): post is BlogPost => post !== null && post.published)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
+```
+
+## What's Next
+
+I plan to add more features over time:
+
+- **Search** across blog posts
+- **RSS feed** generation
+- **View count** tracking
+- **Comments** with GitHub Discussions
+
+Stay tuned for more posts! 🚀
