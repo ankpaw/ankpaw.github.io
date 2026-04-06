@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import { getAllPostsIncludingDrafts } from "@/lib/blog";
 import Link from "next/link";
 
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "Admin Dashboard",
   description: "Manage blog posts and site content.",
@@ -16,7 +18,7 @@ export default async function AdminPage() {
   const role = (session.user as { role?: string })?.role;
   if (role !== "admin") redirect("/");
 
-  const posts = getAllPostsIncludingDrafts();
+  const posts = await getAllPostsIncludingDrafts();
 
   return (
     <section className="max-w-4xl mx-auto px-6 py-20">
@@ -30,11 +32,14 @@ export default async function AdminPage() {
           </span>
         </div>
         <p className="text-surface-400">
-          Manage your blog posts. Create MDX files in{" "}
-          <code className="text-primary-400 bg-surface-800 px-2 py-0.5 rounded text-sm font-mono">
-            content/blog/
-          </code>{" "}
-          and they&apos;ll appear here.
+          Manage your blog posts. Use{" "}
+          <Link
+            href="/studio"
+            className="text-primary-400 hover:text-primary-300 underline underline-offset-2 transition-colors"
+          >
+            Sanity Studio
+          </Link>{" "}
+          to create and edit posts.
         </p>
       </div>
 
@@ -60,15 +65,27 @@ export default async function AdminPage() {
         </div>
       </div>
 
+      {/* Quick Actions */}
+      <div className="animate-fade-in-up animate-delay-150 mb-10">
+        <Link
+          href="/studio"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary-500/10 text-primary-400 border border-primary-500/20 hover:bg-primary-500/20 transition-colors font-medium text-sm"
+        >
+          <span>✏️</span> Open Sanity Studio
+        </Link>
+      </div>
+
       {/* Posts Table */}
       <div className="animate-fade-in-up animate-delay-200">
         <h2 className="text-lg font-bold text-surface-200 mb-4">All Posts</h2>
         {posts.length === 0 ? (
           <div className="text-center py-12 text-surface-500">
             <p>
-              No posts yet. Create an MDX file in{" "}
-              <code className="text-primary-400">content/blog/</code> to get
-              started.
+              No posts yet. Open{" "}
+              <Link href="/studio" className="text-primary-400 hover:text-primary-300 underline">
+                Sanity Studio
+              </Link>{" "}
+              to create your first post.
             </p>
           </div>
         ) : (
@@ -93,7 +110,7 @@ export default async function AdminPage() {
               <tbody>
                 {posts.map((post) => (
                   <tr
-                    key={post.slug}
+                    key={post._id}
                     className="border-b border-surface-800 last:border-0 hover:bg-surface-900/50 transition-colors"
                   >
                     <td className="px-5 py-4 text-sm font-medium text-surface-200">
