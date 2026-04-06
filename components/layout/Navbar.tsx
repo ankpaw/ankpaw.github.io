@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -16,10 +16,13 @@ import LanguageSwitcher, {
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [avatarOpen, setAvatarOpen] = useState(false);
+  const avatarRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const { data: session, status } = useSession();
   const isAdmin = status === "authenticated" && (session?.user as { role?: string })?.role === "admin";
   const t = useTranslations();
+  const user = session?.user;
 
   const navLinks = [
     { href: "/about", label: t.nav.about },
@@ -32,6 +35,17 @@ export default function Navbar() {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Close avatar dropdown on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (avatarRef.current && !avatarRef.current.contains(e.target as Node)) {
+        setAvatarOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
   }, []);
 
   return (
@@ -110,15 +124,66 @@ export default function Navbar() {
                 {t.nav.resume}
               </Button>
             </a>
-            {status === "authenticated" ? (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => signOut()}
-                className="ml-1 text-xs text-muted-foreground cursor-pointer"
-              >
-                {t.nav.signOut}
-              </Button>
+            {/* Auth — Avatar or Sign In */}
+            {status === "authenticated" && user ? (
+              <div className="relative ml-1" ref={avatarRef}>
+                <button
+                  onClick={() => setAvatarOpen(!avatarOpen)}
+                  className="flex items-center gap-2 rounded-sm p-1 pr-3 hover:bg-muted/50 transition-colors group"
+                  aria-label="User menu"
+                >
+                  {user.image ? (
+                    <Image
+                      src={user.image}
+                      alt={user.name ?? "User avatar"}
+                      width={28}
+                      height={28}
+                      className="rounded-full ring-1 ring-border group-hover:ring-primary/50 transition-all"
+                    />
+                  ) : (
+                    <div className="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center text-xs font-mono text-primary">
+                      {user.name?.[0]?.toUpperCase() ?? "U"}
+                    </div>
+                  )}
+                  <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted-foreground group-hover:text-foreground transition-colors">
+                    {user.name?.split(" ")[0]}
+                  </span>
+                </button>
+
+                <AnimatePresence>
+                  {avatarOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                      transition={{ duration: 0.15, ease: "easeOut" }}
+                      className="absolute right-0 top-full mt-2 w-52 glass border border-white/[0.08] rounded-sm shadow-xl shadow-black/20 overflow-hidden z-50"
+                    >
+                      {/* User info header */}
+                      <div className="px-4 py-3 border-b border-white/[0.06]">
+                        <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-foreground">{user.name}</p>
+                        <p className="text-[11px] text-muted-foreground/70 mt-0.5 truncate">{user.email}</p>
+                      </div>
+                      {/* Actions */}
+                      {isAdmin && (
+                        <Link
+                          href="/admin"
+                          onClick={() => setAvatarOpen(false)}
+                          className="flex items-center gap-2 px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.1em] text-emerald-400/80 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"
+                        >
+                          {t.nav.admin}
+                        </Link>
+                      )}
+                      <button
+                        onClick={() => { setAvatarOpen(false); signOut(); }}
+                        className="w-full flex items-center gap-2 px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.1em] text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+                      >
+                        {t.nav.signOut}
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             ) : status === "unauthenticated" ? (
               <Button
                 variant="ghost"
@@ -192,15 +257,37 @@ export default function Navbar() {
                     {t.nav.resume}
                   </Button>
                 </a>
-                {status === "authenticated" ? (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => signOut()}
-                    className="justify-start px-4 text-sm text-muted-foreground cursor-pointer"
-                  >
-                    {t.nav.signOut}
-                  </Button>
+                {/* Auth — mobile */}
+                {status === "authenticated" && user ? (
+                  <div className="mt-2 pt-2 border-t border-border">
+                    <div className="flex items-center gap-3 px-4 py-2">
+                      {user.image ? (
+                        <Image
+                          src={user.image}
+                          alt={user.name ?? "User"}
+                          width={32}
+                          height={32}
+                          className="rounded-full ring-1 ring-border"
+                        />
+                      ) : (
+                        <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-xs font-mono text-primary">
+                          {user.name?.[0]?.toUpperCase() ?? "U"}
+                        </div>
+                      )}
+                      <div>
+                        <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-foreground">{user.name}</p>
+                        <p className="text-[11px] text-muted-foreground/70">{user.email}</p>
+                      </div>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => signOut()}
+                      className="justify-start px-4 w-full font-mono text-[11px] uppercase tracking-[0.1em] text-muted-foreground cursor-pointer"
+                    >
+                      {t.nav.signOut}
+                    </Button>
+                  </div>
                 ) : status === "unauthenticated" ? (
                   <Button
                     variant="ghost"
