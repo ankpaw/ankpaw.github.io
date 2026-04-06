@@ -1,23 +1,28 @@
 import { notFound } from "next/navigation";
-import { MDXRemote } from "next-mdx-remote/rsc";
 import { getPostBySlug, getPostSlugs } from "@/lib/blog";
-import { mdxComponents } from "@/components/blog/MdxContent";
-import Link from "next/link";
 import type { Metadata } from "next";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { BackToBlogButton, AllPostsButton } from "@/components/blog/BlogNavButtons";
+import PortableTextContent from "@/components/blog/PortableTextContent";
+import EngagementSection from "@/components/blog/EngagementSection";
+
+export const revalidate = 60;
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  return getPostSlugs().map((slug) => ({ slug }));
+  const slugs = await getPostSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
   params,
 }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await getPostBySlug(slug);
   if (!post) return {};
   return {
     title: post.title,
@@ -27,89 +32,55 @@ export async function generateMetadata({
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await getPostBySlug(slug);
   if (!post || !post.published) notFound();
 
   return (
-    <article className="max-w-3xl mx-auto px-6 py-20">
+    <article className="max-w-3xl mx-auto px-6 py-20 md:py-28">
       {/* Back link */}
-      <Link
-        href="/blog"
-        className="inline-flex items-center gap-2 text-sm text-surface-500 hover:text-primary-400 transition-colors mb-8"
-      >
-        <svg
-          className="w-4 h-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M10 19l-7-7m0 0l7-7m-7 7h18"
-          />
-        </svg>
-        Back to Blog
-      </Link>
+      <BackToBlogButton />
 
       {/* Header */}
-      <header className="animate-fade-in-up mb-10">
-        <div className="flex flex-wrap items-center gap-3 mb-4">
-          <time className="text-sm font-mono text-surface-500">
+      <header className="mb-10">
+        <div className="flex flex-wrap items-center gap-3 mb-5 uppercase tracking-[0.1em]">
+          <time className="text-xs font-mono text-muted-foreground">
             {new Date(post.date).toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
               day: "numeric",
             })}
           </time>
-          <span className="text-surface-700">·</span>
-          <span className="text-sm text-surface-500">{post.readingTime}</span>
+          <span className="text-muted-foreground/30">·</span>
+          <span className="text-xs font-mono text-muted-foreground">{post.readingTime}</span>
         </div>
 
-        <h1 className="text-3xl md:text-4xl font-black tracking-tight text-surface-50 mb-4">
+        <h1 className="font-serif text-4xl md:text-5xl font-bold tracking-tight leading-[1.1] text-foreground mb-6">
           {post.title}
         </h1>
 
         <div className="flex flex-wrap gap-2">
           {post.tags.map((tag) => (
-            <span
-              key={tag}
-              className="px-2.5 py-0.5 text-xs font-medium rounded-full bg-primary-500/10 text-primary-400 border border-primary-500/20"
-            >
+            <Badge key={tag} variant="outline" className="text-[10px] font-mono text-muted-foreground">
               {tag}
-            </span>
+            </Badge>
           ))}
         </div>
       </header>
 
       {/* Content */}
-      <div className="animate-fade-in-up animate-delay-200 prose">
-        <MDXRemote source={post.content} components={mdxComponents} />
-      </div>
+      {post.body && <PortableTextContent value={post.body} />}
+
+      {/* Engagement */}
+      <EngagementSection 
+        postId={post._id}
+        slug={post.slug}
+        likedBy={post.likedBy}
+        comments={post.comments}
+      />
 
       {/* Footer nav */}
-      <div className="mt-16 pt-8 border-t border-surface-800">
-        <Link
-          href="/blog"
-          className="inline-flex items-center gap-2 text-primary-400 hover:text-primary-300 transition-colors font-medium"
-        >
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M10 19l-7-7m0 0l7-7m-7 7h18"
-            />
-          </svg>
-          All Posts
-        </Link>
-      </div>
+      <Separator className="mt-16 mb-8 bg-gradient-to-r from-transparent via-border to-transparent" />
+      <AllPostsButton />
     </article>
   );
 }
