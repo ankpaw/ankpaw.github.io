@@ -12,14 +12,14 @@ const fr: Translations = {
     admin: "Admin",
   },
   home: {
-    overline: "INGÉNIEUR LOGICIEL",
+    overline: "ARCHITECTE UI",
     greeting: "Bonjour, je m'appelle",
     name: "Ankit Pawar",
-    tagline: "Je construis des choses pour le web.",
-    bio: "Je suis un développeur logiciel autodidacte qui aime écrire du code propre, réutilisable et optimisé. Le développement web est ma spécialité. J'ai de l'expérience avec les stacks Open Source et Microsoft pour le développement d'applications web évolutives et responsives. Actuellement, j'aide à construire",
-    hubLink: "Hub — réinventer le modèle opérationnel des services financiers.",
+    tagline: "J'architecte la couche frontend.",
+    bio: "Architecte UI avec plus de 8 ans d'expérience dans la conception de systèmes micro-frontend évolutifs, la définition de standards d'ingénierie frontend et la livraison d'interfaces de production qui gèrent de véritables décisions financières. Actuellement à la tête de l'architecture frontend chez Hub — réinventant le modèle opérationnel des services financiers.",
+    hubLink: "",
     getInTouch: "Me Contacter",
-    readBlog: "Lire Mon Blog",
+    readBlog: "Lire le Blog",
   },
   about: {
     overline: "ARCHITECTE UI — PARCOURS DE CARRIÈRE",
@@ -193,21 +193,21 @@ const fr: Translations = {
     allPosts: "Tous les Articles",
   },
   contact: {
-    overline: "PRENDRE CONTACT",
-    title: "Prendre",
-    titleHighlight: "Contact",
+    overline: "DISCUTONS",
+    title: "Discutons",
+    titleHighlight: "",
     subtitle:
-      "Vous avez un projet en tête ou vous voulez simplement dire bonjour 👋🏻 ? N'hésitez pas à me contacter.",
-    emailLabel: "Votre Email",
+      "Vous avez un projet en tête ou vous voulez simplement dire bonjour 👋🏻 ? Écrivez-moi sans hésiter.",
+    emailLabel: "Votre email",
     emailPlaceholder: "vous@exemple.com",
     subjectLabel: "Sujet",
     subjectPlaceholder: "Dites-moi comment je peux vous aider",
     messageLabel: "Message",
     messagePlaceholder: "Écrivez votre message ici...",
-    sendMessage: "Envoyer le Message",
+    sendMessage: "Envoyer le message",
   },
   footer: {
-    role: "Développeur Logiciel",
+    role: "Architecte UI",
   },
 };
 
