@@ -1,10 +1,11 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { MotionDiv, MotionSection } from "@/components/motion";
 import { useTranslations } from "@/lib/i18n";
+import { useMotionValue, useSpring, useTransform, motion } from "framer-motion";
 
 const techStack = [
   "React", "TypeScript", "Micro Frontends", "Next.js", "Node.js", "Webpack", "Storybook", "MCP",
@@ -12,9 +13,67 @@ const techStack = [
 
 export default function Home() {
   const t = useTranslations();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Raw mouse position (0–1 normalized)
+  const rawX = useMotionValue(0.5);
+  const rawY = useMotionValue(0.5);
+
+  // Spring-smoothed — slow, silky follow
+  const x = useSpring(rawX, { stiffness: 50, damping: 18, mass: 1.2 });
+  const y = useSpring(rawY, { stiffness: 50, damping: 18, mass: 1.2 });
+
+  // Map 0–1 to CSS percent strings for the primary orb
+  const orb1Left = useTransform(x, [0, 1], ["10%", "90%"]);
+  const orb1Top  = useTransform(y, [0, 1], ["10%", "90%"]);
+
+  // Secondary orb moves inversely for depth
+  const orb2Left = useTransform(x, [0, 1], ["80%", "20%"]);
+  const orb2Top  = useTransform(y, [0, 1], ["80%", "20%"]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = sectionRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    rawX.set((e.clientX - rect.left) / rect.width);
+    rawY.set((e.clientY - rect.top) / rect.height);
+  };
 
   return (
-    <MotionSection className="relative min-h-[calc(100vh-5rem)] flex flex-col justify-center hero-glow dot-grid">
+    <MotionSection
+      ref={sectionRef}
+      onMouseMove={handleMouseMove}
+      className="relative min-h-[calc(100vh-5rem)] flex flex-col justify-center hero-glow dot-grid"
+    >
+      {/* Orb 1 — indigo, tracks pointer */}
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute z-0 rounded-full"
+        style={{
+          width: 700,
+          height: 700,
+          left: orb1Left,
+          top: orb1Top,
+          translateX: "-50%",
+          translateY: "-50%",
+          background: "radial-gradient(circle, oklch(0.62 0.22 277 / 0.25) 0%, transparent 70%)",
+          filter: "blur(72px)",
+        }}
+      />
+      {/* Orb 2 — emerald, moves opposite for depth */}
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute z-0 rounded-full"
+        style={{
+          width: 500,
+          height: 500,
+          left: orb2Left,
+          top: orb2Top,
+          translateX: "-50%",
+          translateY: "-50%",
+          background: "radial-gradient(circle, oklch(0.68 0.18 162 / 0.18) 0%, transparent 70%)",
+          filter: "blur(80px)",
+        }}
+      />
       <div className="relative z-10 max-w-6xl mx-auto px-6 py-20 md:py-32 w-full">
         <MotionDiv custom={0}>
           <div className="flex flex-col space-y-6">

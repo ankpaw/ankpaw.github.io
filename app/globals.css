@@ -190,42 +190,11 @@
   -webkit-backdrop-filter: blur(20px) saturate(1.5);
 }
 
-/* ─── Ambient gradient orbs (hero background) ────────────── */
+/* ─── Pointer-tracked hero background ───────────────────── */
+/* Handled via inline styles in page.tsx using JS mouse tracking */
 .hero-glow {
   position: relative;
   overflow: hidden;
-}
-.hero-glow::before,
-.hero-glow::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.15;
-  pointer-events: none;
-  z-index: 0;
-}
-.hero-glow::before {
-  width: 600px;
-  height: 600px;
-  background: oklch(0.62 0.2 277);
-  top: -200px;
-  right: -100px;
-  animation: float 15s ease-in-out infinite;
-}
-.hero-glow::after {
-  width: 500px;
-  height: 500px;
-  background: oklch(0.68 0.18 162);
-  bottom: -200px;
-  left: -100px;
-  animation: float 18s ease-in-out infinite reverse;
-}
-
-@keyframes float {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(30px, -20px) scale(1.05); }
-  66% { transform: translate(-20px, 15px) scale(0.95); }
 }
 
 /* ─── Dot grid background ────────────────────────────────── */
