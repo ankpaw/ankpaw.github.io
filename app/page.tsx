@@ -7,7 +7,7 @@ import { MotionDiv, MotionSection } from "@/components/motion";
 import { useTranslations } from "@/lib/i18n";
 
 const techStack = [
-  "React", "Next.js", "TypeScript", "Node.js", "Tailwind CSS", "PostgreSQL",
+  "React", "TypeScript", "Micro Frontends", "Next.js", "Node.js", "Webpack", "Storybook", "MCP",
 ];
 
 export default function Home() {
@@ -29,22 +29,14 @@ export default function Home() {
         </MotionDiv>
 
         <MotionDiv custom={2}>
-          <h2 className="mt-8 text-2xl sm:text-3xl md:text-4xl font-bold text-muted-foreground leading-tight tracking-tight">
+          <h2 className="mt-8 text-xl sm:text-2xl md:text-3xl font-semibold text-muted-foreground leading-tight tracking-tight">
             {t.home.tagline}
           </h2>
         </MotionDiv>
 
         <MotionDiv custom={3} className="mt-6 max-w-2xl">
           <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-            {t.home.bio}{" "}
-            <a
-              href="https://hub.com"
-              target="_blank"
-              rel="noreferrer"
-              className="text-primary hover:text-primary/80 underline underline-offset-4 transition-colors font-medium"
-            >
-              {t.home.hubLink}
-            </a>
+            {t.home.bio}
           </p>
         </MotionDiv>
 
