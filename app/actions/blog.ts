@@ -20,7 +20,7 @@ export async function toggleLike(postId: string, slug: string) {
       // Unlike
       await writeClient
         .patch(postId)
-        .unset([`likedBy[@ == "${email}"]`])
+        .unset([`likedBy[@ == ${JSON.stringify(email)}]`])
         .commit();
     } else {
       // Like
