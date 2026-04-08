@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useLocale, LOCALES, LOCALE_CODES, type Locale } from "@/lib/i18n";
+import { useLocale, LOCALES, LOCALE_CODES } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 export default function LanguageSwitcher() {
@@ -58,7 +58,7 @@ export default function LanguageSwitcher() {
               <button
                 key={code}
                 onClick={() => {
-                  setLocale(code as Locale);
+                  setLocale(code);
                   setOpen(false);
                 }}
                 className={cn(
@@ -68,8 +68,8 @@ export default function LanguageSwitcher() {
                     : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                 )}
               >
-                <span className="text-base">{LOCALES[code as Locale].flag}</span>
-                <span>{LOCALES[code as Locale].nativeName}</span>
+                <span className="text-base">{LOCALES[code].flag}</span>
+                <span>{LOCALES[code].nativeName}</span>
                 {locale === code && (
                   <svg
                     className="w-3.5 h-3.5 ml-auto text-primary"
@@ -103,7 +103,7 @@ export function MobileLanguageSwitcher() {
       {LOCALE_CODES.map((code) => (
         <button
           key={code}
-          onClick={() => setLocale(code as Locale)}
+          onClick={() => setLocale(code)}
           className={cn(
             "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 cursor-pointer",
             locale === code
@@ -111,8 +111,8 @@ export function MobileLanguageSwitcher() {
               : "text-muted-foreground hover:text-foreground hover:bg-muted/50 border border-transparent"
           )}
         >
-          <span>{LOCALES[code as Locale].flag}</span>
-          <span>{LOCALES[code as Locale].nativeName}</span>
+          <span>{LOCALES[code].flag}</span>
+          <span>{LOCALES[code].nativeName}</span>
         </button>
       ))}
     </div>
