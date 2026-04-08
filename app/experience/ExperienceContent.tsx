@@ -16,7 +16,7 @@ export default function ExperienceContent() {
   // Track which accordion is expanded
   const [expandedId, setExpandedId] = useState<string | null>(jobs[0]?.id || null);
 
-  const toggleExpand = (id: string, e: React.MouseEvent) => {
+  const toggleExpand = (id: string, e: React.SyntheticEvent) => {
     e.preventDefault();
     setExpandedId((prev) => (prev === id ? null : id));
   };
@@ -61,8 +61,17 @@ export default function ExperienceContent() {
 
                   {/* Main Interactive Card */}
                   <Card 
+                    role="button"
+                    tabIndex={0}
+                    aria-expanded={isExpanded}
+                    aria-controls={`exp-content-${exp.id}`}
                     onClick={(e) => toggleExpand(exp.id, e)}
-                    className={`relative cursor-pointer transition-all duration-300 border-border/40 hover:border-border/80 outline-none
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        toggleExpand(exp.id, e);
+                      }
+                    }}
+                    className={`relative cursor-pointer transition-all duration-300 border-border/40 hover:border-border/80 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none focus-visible:border-transparent
                       ${isExpanded ? 'bg-[#1A1A1B]/60 dark:bg-[#18181A]/90 shadow-xl' : 'bg-[#18181A]/40 dark:bg-[#141415]/80 hover:bg-[#18181A]/60 dark:hover:bg-[#1C1C1D]'}
                     `}
                   >
@@ -115,6 +124,7 @@ export default function ExperienceContent() {
                       <AnimatePresence initial={false}>
                         {isExpanded && (
                           <motion.div
+                            id={`exp-content-${exp.id}`}
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}

@@ -1,0 +1,26 @@
+
+> ankpaw.github.io@1.0.0 dev /app
+> next dev --turbopack
+
+▲ Next.js 16.2.2 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+✓ Ready in 518ms
+⚠ turbopack.root should be absolute, using: /app
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+
+○ Compiling /experience ...
+ GET /experience 200 in 5.5s (next.js: 4.9s, application-code: 540ms)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/0i2c_@auth_core_0xyi4v2._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/0i2c_@auth_core_0xyi4v2._.js:5330:264)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AppRouteRouteModule.do (/app/node_modules/.pnpm/next@16.2.2_@babel+core@7.29.0_babel-plugin-react-compiler@1.0.0_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:5:40115)
+ GET /api/auth/session 500 in 2.1s (next.js: 2.0s, application-code: 52ms)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/0i2c_@auth_core_0xyi4v2._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/0i2c_@auth_core_0xyi4v2._.js:5330:264)
+    at async AppRouteRouteModule.do (/app/node_modules/.pnpm/next@16.2.2_@babel+core@7.29.0_babel-plugin-react-compiler@1.0.0_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:5:40115)
+ GET /api/auth/session 500 in 92ms (next.js: 63ms, application-code: 30ms)
+[browser] ClientFetchError: There was a problem with the server configuration. Check the server logs for more information.. Read more at https://errors.authjs.dev#autherror
+[browser] ClientFetchError: There was a problem with the server configuration. Check the server logs for more information.. Read more at https://errors.authjs.dev#autherror
