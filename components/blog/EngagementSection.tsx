@@ -31,11 +31,11 @@ export default function EngagementSection({
     setMounted(true);
   }, []);
 
-  const [optimisticLikedBy, setOptimisticLikedBy] = useState<string[]>(likedBy);
+  const [optimisticLikedBy, setOptimisticLikedBy] = useState<Set<string>>(new Set(likedBy));
   const [isPendingLike, startTransitionLike] = useTransition();
   const [isLikeError, setIsLikeError] = useState(false);
 
-  const hasLiked = userEmail ? optimisticLikedBy.includes(userEmail) : false;
+  const hasLiked = userEmail ? optimisticLikedBy.has(userEmail) : false;
 
   const [deletingCommentId, setDeletingCommentId] = useState<string | null>(null);
   
@@ -54,9 +54,15 @@ export default function EngagementSection({
     if (isPendingLike || !userEmail) return;
     
     // Optimistic toggle
-    setOptimisticLikedBy((prev) => 
-      hasLiked ? prev.filter((e) => e !== userEmail) : [...prev, userEmail]
-    );
+    setOptimisticLikedBy((prev) => {
+      const next = new Set(prev);
+      if (hasLiked) {
+        next.delete(userEmail);
+      } else {
+        next.add(userEmail);
+      }
+      return next;
+    });
     setIsLikeError(false);
     
     startTransitionLike(async () => {
@@ -64,9 +70,15 @@ export default function EngagementSection({
       if (!res.success) {
         setIsLikeError(true);
         // revert optimistic
-        setOptimisticLikedBy((prev) => 
-          !hasLiked ? prev.filter((e) => e !== userEmail) : [...prev, userEmail]
-        );
+        setOptimisticLikedBy((prev) => {
+          const next = new Set(prev);
+          if (!hasLiked) {
+            next.delete(userEmail);
+          } else {
+            next.add(userEmail);
+          }
+          return next;
+        });
       }
     });
   };
@@ -100,7 +112,7 @@ export default function EngagementSection({
             className="flex items-center space-x-2 rounded-full px-6 py-6 border-primary/20 hover:border-primary/50"
           >
             <Heart className={`w-5 h-5 transition-colors ${hasLiked ? "text-red-500 fill-red-500" : "text-muted-foreground"}`} />
-            <span className="text-lg font-bold">{optimisticLikedBy.length}</span>
+            <span className="text-lg font-bold">{optimisticLikedBy.size}</span>
           </Button>
         </motion.div>
         {isLikeError && <p className="text-sm text-destructive">Failed to like. Please sign in with GitHub.</p>}
