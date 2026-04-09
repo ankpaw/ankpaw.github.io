@@ -177,6 +177,7 @@ export default function EngagementSection({
                       size="icon" 
                       onClick={() => handleDeleteComment(c._id)}
                       disabled={deletingCommentId === c._id}
+                      aria-label="Delete comment"
                       className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
                     >
                       {deletingCommentId === c._id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
