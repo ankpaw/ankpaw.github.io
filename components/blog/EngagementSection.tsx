@@ -135,6 +135,7 @@ export default function EngagementSection({
             onChange={(e) => setCommentText(e.target.value)}
             disabled={!mounted || isPendingComment || !isSignedIn}
             className="min-h-[100px] resize-y bg-muted/50 border-border focus:bg-background transition-colors p-4 rounded-xl"
+            aria-label="Add a comment"
           />
           <div className="flex justify-between items-center">
             <span className="text-sm">
