@@ -8,7 +8,10 @@ export const mdxComponents = {
     <h2 className="text-2xl font-bold text-surface-100 mt-8 mb-3" {...props} />
   ),
   h3: (props: ComponentPropsWithoutRef<"h3">) => (
-    <h3 className="text-xl font-semibold text-surface-200 mt-6 mb-2" {...props} />
+    <h3
+      className="text-xl font-semibold text-surface-200 mt-6 mb-2"
+      {...props}
+    />
   ),
   p: (props: ComponentPropsWithoutRef<"p">) => (
     <p className="text-surface-300 leading-relaxed mb-5" {...props} />
@@ -25,7 +28,10 @@ export const mdxComponents = {
     <ul className="list-disc pl-6 mb-5 space-y-2 text-surface-300" {...props} />
   ),
   ol: (props: ComponentPropsWithoutRef<"ol">) => (
-    <ol className="list-decimal pl-6 mb-5 space-y-2 text-surface-300" {...props} />
+    <ol
+      className="list-decimal pl-6 mb-5 space-y-2 text-surface-300"
+      {...props}
+    />
   ),
   blockquote: (props: ComponentPropsWithoutRef<"blockquote">) => (
     <blockquote

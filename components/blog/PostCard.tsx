@@ -17,7 +17,9 @@ export default function PostCard({ post }: { post: BlogPost }) {
               })}
             </time>
             <span className="text-muted-foreground/30">·</span>
-            <span className="text-xs text-muted-foreground">{post.readingTime}</span>
+            <span className="text-xs text-muted-foreground">
+              {post.readingTime}
+            </span>
           </div>
 
           <h2 className="text-xl md:text-2xl font-serif font-medium text-foreground tracking-tight group-hover:text-primary transition-colors duration-200 mb-2">
