@@ -20,6 +20,12 @@ export default async function AdminPage() {
 
   const posts = await getAllPostsIncludingDrafts();
 
+  const publishedCount = posts.reduce(
+    (count, post) => count + (post.published ? 1 : 0),
+    0,
+  );
+  const draftCount = posts.length - publishedCount;
+
   return (
     <section className="max-w-4xl mx-auto px-6 py-20">
       <div className="animate-fade-in-up mb-12">
@@ -46,21 +52,17 @@ export default async function AdminPage() {
       {/* Stats */}
       <div className="animate-fade-in-up animate-delay-100 grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
         <div className="p-5 rounded-xl bg-surface-900/50 border border-surface-800">
-          <p className="text-3xl font-black text-surface-50">
-            {posts.length}
-          </p>
+          <p className="text-3xl font-black text-surface-50">{posts.length}</p>
           <p className="text-surface-500 text-sm mt-1">Total Posts</p>
         </div>
         <div className="p-5 rounded-xl bg-surface-900/50 border border-surface-800">
           <p className="text-3xl font-black text-accent-400">
-            {posts.filter((p) => p.published).length}
+            {publishedCount}
           </p>
           <p className="text-surface-500 text-sm mt-1">Published</p>
         </div>
         <div className="p-5 rounded-xl bg-surface-900/50 border border-surface-800">
-          <p className="text-3xl font-black text-yellow-400">
-            {posts.filter((p) => !p.published).length}
-          </p>
+          <p className="text-3xl font-black text-yellow-400">{draftCount}</p>
           <p className="text-surface-500 text-sm mt-1">Drafts</p>
         </div>
       </div>
@@ -82,7 +84,10 @@ export default async function AdminPage() {
           <div className="text-center py-12 text-surface-500">
             <p>
               No posts yet. Open{" "}
-              <Link href="/studio" className="text-primary-400 hover:text-primary-300 underline">
+              <Link
+                href="/studio"
+                className="text-primary-400 hover:text-primary-300 underline"
+              >
                 Sanity Studio
               </Link>{" "}
               to create your first post.
