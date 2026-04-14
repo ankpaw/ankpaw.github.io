@@ -6,17 +6,22 @@ import { revalidatePath } from "next/cache";
 
 export async function toggleLike(postId: string, slug: string) {
   const session = await auth();
-  
+
   if (!session?.user?.email) {
-    return { success: false, error: "You must be signed in with a valid email to like a post." };
+    return {
+      success: false,
+      error: "You must be signed in with a valid email to like a post.",
+    };
   }
 
   try {
-    const post = await client.fetch(`*[_id == $id][0]{ likedBy }`, { id: postId });
-    const likedBy = post?.likedBy || [];
+    const post = await client.fetch(`*[_id == $id][0]{ likedBy }`, {
+      id: postId,
+    });
+    const likedBy = new Set(post?.likedBy || []);
     const email = session.user.email;
 
-    if (likedBy.includes(email)) {
+    if (likedBy.has(email)) {
       // Unlike
       await writeClient
         .patch(postId)
@@ -27,7 +32,7 @@ export async function toggleLike(postId: string, slug: string) {
       await writeClient
         .patch(postId)
         .setIfMissing({ likedBy: [] })
-        .append('likedBy', [email])
+        .append("likedBy", [email])
         .commit();
     }
 
@@ -40,9 +45,13 @@ export async function toggleLike(postId: string, slug: string) {
   }
 }
 
-export async function submitComment(postId: string, slug: string, text: string) {
+export async function submitComment(
+  postId: string,
+  slug: string,
+  text: string,
+) {
   const session = await auth();
-  
+
   if (!session?.user) {
     return { success: false, error: "You must be signed in to comment." };
   }
@@ -71,13 +80,15 @@ export async function submitComment(postId: string, slug: string, text: string) 
 
 export async function deleteComment(commentId: string, slug: string) {
   const session = await auth();
-  
+
   if (!session?.user?.email) {
     return { success: false, error: "You must be signed in." };
   }
 
   try {
-    const comment = await client.fetch(`*[_id == $id][0]{ email }`, { id: commentId });
+    const comment = await client.fetch(`*[_id == $id][0]{ email }`, {
+      id: commentId,
+    });
     if (!comment || comment.email !== session.user.email) {
       return { success: false, error: "Unauthorized to delete this comment." };
     }
