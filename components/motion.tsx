@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, type HTMLMotionProps } from "framer-motion";
+import { type ComponentProps } from "react";
+import { motion } from "framer-motion";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 24 },
@@ -29,7 +30,7 @@ export function MotionDiv({
   className,
   custom = 0,
   ...props
-}: HTMLMotionProps<"div"> & { custom?: number }) {
+}: ComponentProps<typeof motion.div> & { custom?: number }) {
   return (
     <motion.div
       variants={fadeInUp}
@@ -48,7 +49,7 @@ export function MotionSection({
   children,
   className,
   ...props
-}: HTMLMotionProps<"section">) {
+}: ComponentProps<typeof motion.section>) {
   return (
     <motion.section
       variants={stagger}
@@ -67,7 +68,7 @@ export function MotionArticle({
   className,
   custom = 0,
   ...props
-}: HTMLMotionProps<"article"> & { custom?: number }) {
+}: ComponentProps<typeof motion.article> & { custom?: number }) {
   return (
     <motion.article
       variants={fadeInUp}
@@ -86,7 +87,7 @@ export function MotionStaggerChild({
   children,
   className,
   ...props
-}: HTMLMotionProps<"div">) {
+}: ComponentProps<typeof motion.div>) {
   return (
     <motion.div variants={fadeInUp} className={className} {...props}>
       {children}
