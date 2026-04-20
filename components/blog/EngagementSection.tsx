@@ -110,8 +110,14 @@ export default function EngagementSection({
             disabled={isPendingLike || !isSignedIn}
             variant="outline"
             className="flex items-center space-x-2 rounded-full px-6 py-6 border-primary/20 hover:border-primary/50"
+            aria-pressed={hasLiked}
+            aria-label={hasLiked ? `Unlike post, ${optimisticLikedBy.size} likes` : `Like post, ${optimisticLikedBy.size} likes`}
+            title={!isSignedIn ? "Sign in to like this post" : ""}
           >
-            <Heart className={`w-5 h-5 transition-colors ${hasLiked ? "text-red-500 fill-red-500" : "text-muted-foreground"}`} />
+            <Heart
+              className={`w-5 h-5 transition-colors ${hasLiked ? "text-red-500 fill-red-500" : "text-muted-foreground"}`}
+              aria-hidden="true"
+            />
             <span className="text-lg font-bold">{optimisticLikedBy.size}</span>
           </Button>
         </motion.div>
