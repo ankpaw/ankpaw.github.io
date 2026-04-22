@@ -31,17 +31,24 @@ export default function EngagementSection({
     setMounted(true);
   }, []);
 
-  const [optimisticLikedBy, setOptimisticLikedBy] = useState<Set<string>>(new Set(likedBy));
+  const [optimisticLikedBy, setOptimisticLikedBy] = useState<Set<string>>(
+    new Set(likedBy),
+  );
   const [isPendingLike, startTransitionLike] = useTransition();
   const [isLikeError, setIsLikeError] = useState(false);
 
   const hasLiked = userEmail ? optimisticLikedBy.has(userEmail) : false;
 
-  const [deletingCommentId, setDeletingCommentId] = useState<string | null>(null);
-  
+  const [deletingCommentId, setDeletingCommentId] = useState<string | null>(
+    null,
+  );
+
   const [commentText, setCommentText] = useState("");
   const [isPendingComment, startTransitionComment] = useTransition();
-  const [commentMessage, setCommentMessage] = useState({ text: "", isError: false });
+  const [commentMessage, setCommentMessage] = useState({
+    text: "",
+    isError: false,
+  });
 
   const handleDeleteComment = async (commentId: string) => {
     if (!confirm("Are you sure you want to delete this comment?")) return;
@@ -52,7 +59,7 @@ export default function EngagementSection({
 
   const handleLike = () => {
     if (isPendingLike || !userEmail) return;
-    
+
     // Optimistic toggle
     setOptimisticLikedBy((prev) => {
       const next = new Set(prev);
@@ -64,7 +71,7 @@ export default function EngagementSection({
       return next;
     });
     setIsLikeError(false);
-    
+
     startTransitionLike(async () => {
       const res = await toggleLike(postId, slug);
       if (!res.success) {
@@ -91,10 +98,16 @@ export default function EngagementSection({
     startTransitionComment(async () => {
       const res = await submitComment(postId, slug, commentText);
       if (res.success) {
-        setCommentMessage({ text: "Comment submitted for review!", isError: false });
+        setCommentMessage({
+          text: "Comment submitted for review!",
+          isError: false,
+        });
         setCommentText("");
       } else {
-        setCommentMessage({ text: res.error || "Failed to post comment", isError: true });
+        setCommentMessage({
+          text: res.error || "Failed to post comment",
+          isError: true,
+        });
       }
     });
   };
@@ -103,19 +116,41 @@ export default function EngagementSection({
     <div className="mt-16 space-y-16">
       {/* LIKES */}
       <div className="flex flex-col items-center justify-center space-y-4">
-        <h3 className="text-xl font-semibold text-foreground">Did you enjoy this post?</h3>
+        <h3 className="text-xl font-semibold text-foreground">
+          Did you enjoy this post?
+        </h3>
         <motion.div whileTap={{ scale: 0.9 }}>
-          <Button 
-            onClick={handleLike} 
+          <Button
+            onClick={handleLike}
             disabled={isPendingLike || !isSignedIn}
             variant="outline"
             className="flex items-center space-x-2 rounded-full px-6 py-6 border-primary/20 hover:border-primary/50"
+            aria-pressed={hasLiked}
+            aria-label={
+              hasLiked
+                ? `Unlike post (${optimisticLikedBy.size} likes)`
+                : `Like post (${optimisticLikedBy.size} likes)`
+            }
+            title={
+              !isSignedIn
+                ? "Sign in to like this post"
+                : hasLiked
+                  ? "Unlike post"
+                  : "Like post"
+            }
           >
-            <Heart className={`w-5 h-5 transition-colors ${hasLiked ? "text-red-500 fill-red-500" : "text-muted-foreground"}`} />
+            <Heart
+              aria-hidden="true"
+              className={`w-5 h-5 transition-colors ${hasLiked ? "text-red-500 fill-red-500" : "text-muted-foreground"}`}
+            />
             <span className="text-lg font-bold">{optimisticLikedBy.size}</span>
           </Button>
         </motion.div>
-        {isLikeError && <p className="text-sm text-destructive">Failed to like. Please sign in with GitHub.</p>}
+        {isLikeError && (
+          <p className="text-sm text-destructive">
+            Failed to like. Please sign in with GitHub.
+          </p>
+        )}
       </div>
 
       <hr className="border-border/50" />
@@ -124,12 +159,14 @@ export default function EngagementSection({
       <div>
         <div className="flex items-center space-x-2 mb-8">
           <MessageSquare className="w-5 h-5 text-primary" />
-          <h3 className="text-2xl font-bold text-foreground">Comments ({comments.length})</h3>
+          <h3 className="text-2xl font-bold text-foreground">
+            Comments ({comments.length})
+          </h3>
         </div>
 
         {/* Comment Form */}
         <form onSubmit={handleCommentSubmit} className="mb-12 space-y-4">
-          <Textarea 
+          <Textarea
             placeholder="What are your thoughts?"
             value={commentText}
             onChange={(e) => setCommentText(e.target.value)}
@@ -140,13 +177,25 @@ export default function EngagementSection({
           <div className="flex justify-between items-center">
             <span className="text-sm">
               {commentMessage.text && (
-                <span className={commentMessage.isError ? "text-destructive" : "text-green-500"}>
+                <span
+                  className={
+                    commentMessage.isError
+                      ? "text-destructive"
+                      : "text-green-500"
+                  }
+                >
                   {commentMessage.text}
                 </span>
               )}
             </span>
-            <Button type="submit" disabled={isPendingComment || !commentText.trim()} className="rounded-xl px-6">
-              {isPendingComment && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            <Button
+              type="submit"
+              disabled={isPendingComment || !commentText.trim()}
+              className="rounded-xl px-6"
+            >
+              {isPendingComment && (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              )}
               Post Comment
             </Button>
           </div>
@@ -155,10 +204,17 @@ export default function EngagementSection({
         {/* Comments List */}
         <div className="space-y-6">
           {comments.map((c) => (
-            <div key={c._id} className="flex space-x-4 p-5 rounded-2xl bg-muted/30 border border-border/50">
+            <div
+              key={c._id}
+              className="flex space-x-4 p-5 rounded-2xl bg-muted/30 border border-border/50"
+            >
               {c.image ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={c.image} alt={c.name} className="w-10 h-10 rounded-full flex-shrink-0" />
+                <img
+                  src={c.image}
+                  alt={c.name}
+                  className="w-10 h-10 rounded-full flex-shrink-0"
+                />
               ) : (
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                   <User className="w-5 h-5 text-primary" />
@@ -173,19 +229,33 @@ export default function EngagementSection({
                     </span>
                   </div>
                   {userEmail === c.email && (
-                    <Button 
-                      variant="ghost" 
-                      size="icon" 
+                    <Button
+                      variant="ghost"
+                      size="icon"
                       onClick={() => handleDeleteComment(c._id)}
                       disabled={deletingCommentId === c._id}
                       aria-label="Delete comment"
+                      title={
+                        deletingCommentId === c._id
+                          ? "Deleting comment..."
+                          : "Delete comment"
+                      }
                       className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
                     >
-                      {deletingCommentId === c._id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                      {deletingCommentId === c._id ? (
+                        <Loader2
+                          aria-hidden="true"
+                          className="w-4 h-4 animate-spin"
+                        />
+                      ) : (
+                        <Trash2 aria-hidden="true" className="w-4 h-4" />
+                      )}
                     </Button>
                   )}
                 </div>
-                <p className="text-muted-foreground text-sm whitespace-pre-wrap">{c.text}</p>
+                <p className="text-muted-foreground text-sm whitespace-pre-wrap">
+                  {c.text}
+                </p>
               </div>
             </div>
           ))}
@@ -196,12 +266,18 @@ export default function EngagementSection({
           )}
         </div>
       </div>
-      
+
       {/* SIGN IN PROMPT */}
       {mounted && !isSignedIn && (
         <div className="flex flex-col items-center justify-center p-8 mt-12 bg-muted/30 rounded-2xl space-y-4 border border-border/50">
-          <p className="text-foreground text-center font-medium">Want to join the conversation and like posts?</p>
-          <Button onClick={() => signIn("github")} variant="default" className="rounded-full px-6">
+          <p className="text-foreground text-center font-medium">
+            Want to join the conversation and like posts?
+          </p>
+          <Button
+            onClick={() => signIn("github")}
+            variant="default"
+            className="rounded-full px-6"
+          >
             Sign In with GitHub
           </Button>
         </div>
