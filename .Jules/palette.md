@@ -1,3 +1,7 @@
 ## 2026-04-08 - Added Keyboard Accessibility to Experience Timeline Cards
 **Learning:** Custom interactive elements designed as cards (like the experience timeline accordions) often lack keyboard support (`tabIndex`, `role`, and `onKeyDown`) out of the box, rendering them unusable for keyboard and screen reader users. Simply adding an `onClick` handler to a `<div>` or custom UI card is insufficient for a11y.
 **Action:** Always ensure that custom interactive elements acting as buttons have `role="button"`, `tabIndex={0}`, keyboard event handlers (for `Enter` and `Space`), and proper `aria-expanded`/`aria-controls` attributes if they toggle content. Ensure focus states are clear using `focus-visible`. Update click handler types (e.g. from `React.MouseEvent` to `React.SyntheticEvent`) to safely handle both mouse and keyboard inputs.
+
+## 2026-04-23 - State-Driven Icon Buttons Accessibility Pattern
+**Learning:** State-driven buttons with icons (like like or toggle buttons) require explicit ARIA attributes to be usable by screen readers. `aria-pressed` must be used to indicate toggle state, and since `aria-label` overrides inner text, a comprehensive label must combine both the action and the current value. Decorative icons inside the button must also be hidden using `aria-hidden="true"`.
+**Action:** For interactive icon buttons that reflect state, always include `aria-pressed`, a dynamically updating `aria-label` describing action and value, a `title` explaining disabled states, and `aria-hidden="true"` on the icon itself.
