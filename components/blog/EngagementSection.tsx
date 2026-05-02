@@ -110,9 +110,12 @@ export default function EngagementSection({
             disabled={isPendingLike || !isSignedIn}
             variant="outline"
             className="flex items-center space-x-2 rounded-full px-6 py-6 border-primary/20 hover:border-primary/50"
+            aria-pressed={hasLiked}
+            aria-label={hasLiked ? `Unlike post (${optimisticLikedBy.size} likes)` : `Like post (${optimisticLikedBy.size} likes)`}
+            title={!isSignedIn ? "Sign in to like this post" : ""}
           >
-            <Heart className={`w-5 h-5 transition-colors ${hasLiked ? "text-red-500 fill-red-500" : "text-muted-foreground"}`} />
-            <span className="text-lg font-bold">{optimisticLikedBy.size}</span>
+            <Heart aria-hidden="true" className={`w-5 h-5 transition-colors ${hasLiked ? "text-red-500 fill-red-500" : "text-muted-foreground"}`} />
+            <span className="text-lg font-bold" aria-hidden="true">{optimisticLikedBy.size}</span>
           </Button>
         </motion.div>
         {isLikeError && <p className="text-sm text-destructive">Failed to like. Please sign in with GitHub.</p>}
@@ -179,9 +182,10 @@ export default function EngagementSection({
                       onClick={() => handleDeleteComment(c._id)}
                       disabled={deletingCommentId === c._id}
                       aria-label="Delete comment"
+                      title="Delete comment"
                       className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
                     >
-                      {deletingCommentId === c._id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                      {deletingCommentId === c._id ? <Loader2 aria-hidden="true" className="w-4 h-4 animate-spin" /> : <Trash2 aria-hidden="true" className="w-4 h-4" />}
                     </Button>
                   )}
                 </div>
